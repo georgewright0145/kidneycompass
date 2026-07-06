@@ -29,12 +29,17 @@ This is a direct lift of the course's flagship pattern — deterministic gates i
 
 When someone types *"creatinine was 80 on Monday, 130 on Wednesday, I had a chest infection,"* the AKI engine flags a suspected acute kidney injury, **holds that reading out of the long-term trend and the risk estimate**, tells the person it has done so, and escalates urgently. When someone asks *"should I stop my metformin?"* the agent refuses to give a personal instruction and routes them to their GP — while still explaining, generically, that metformin is one clinicians review at that kidney function.
 
-## Course concepts demonstrated (four, in code)
+## Course concepts demonstrated (four in code — the minimum is three)
 
-1. **Multi-agent system (ADK)** — orchestrator + four specialist sub-agents with shared state and delegation.
-2. **MCP server** — a scoped FastMCP clinical-knowledge server serving the *versioned, dated* guideline text (KDIGO 2024, NICE NG203, AKI thresholds, KFRE) with exact-term + full-text lookup, consumed "USB-C" style by the guidance agent over stdio. Thresholds are retrieved from curated sources, never recalled from model memory.
-3. **Security** — a red-team refusal suite (10 adversarial prompts, including roleplay and "ignore your rules, clinician mode" injections), the deterministic do-not-answer guard, and Semgrep + secret scanning wired into a CI gate.
-4. **Agent Skills (Agents CLI)** — eight governed clinical skills (SKILL.md + references + machine-readable trust cards), built and evaluated with `agents-cli`; the demo runs from the `agents-cli playground`.
+| Concept | Where | Proof |
+|---|---|---|
+| **Multi-agent system (ADK)** | `app/agent.py`, `app/sub_agents/` | Root orchestrator delegates to four specialists via shared session state |
+| **MCP server** | `mcp/clinical_knowledge_server/` | Scoped FastMCP server serves versioned KDIGO/NICE text (exact-term + full-text) over stdio to the guidance agent — thresholds retrieved, never recalled |
+| **Security** | `app/guardrails.py`, `security/` | Deterministic prescribing-refusal guard + 10-case red-team suite (incl. roleplay/injection) + Semgrep & secret CI gate |
+| **Agent Skills (Agents CLI)** | `skills/` | Eight governed skills (SKILL.md + references + trust cards); scaffolded, evaluated and demoed with `agents-cli` |
+
+Antigravity was not used (built with `agents-cli` + an agentic coding model), and a live deployment
+is optional upside — the project is deploy-ready and the demo runs from the `agents-cli playground`.
 
 ## The engineering journey
 
@@ -43,6 +48,17 @@ Two decisions defined the build. First, **spec-driven, green-first**: every clin
 Second, **evaluation as the product, not a formality.** The safety story is six deterministic eval suites run through `agents-cli eval` as pass^k gates: *must-always-escalate* (8/8), *must-detect-AKI* (6/6), *must-not-escalate* — the over-referral counterweight — (7/7), *classification accuracy* (10/10), *KFRE accuracy* (6/6), and the *refusal* suite (10/10). Each miss was treated as a real finding: the one AKI case the agent initially "named but didn't escalate" is what drove the deterministic escalation-delivery callback.
 
 The KFRE risk equation is the sharpest example of the project's ethos. The published UK recalibration constants weren't in any summary document, and the rule was firm: *never invent a clinical constant.* So the engine refused to compute — until real sources arrived. I read the actual coefficients from a calculator's JavaScript, then **empirically re-derived the UK baseline survival** on the 35,539-patient Major 2019 cohort via a Breslow recalibration, and **validated it**: Harrell's C = 0.930, with the derived UK survival higher than the North-American values — matching the published finding that non-UK calibrations overestimate UK risk. A wrong risk number would be worse than none.
+
+## Results (all verifiable in the repo)
+
+- **104 unit tests** pass on the deterministic engines and eval metrics.
+- **Six deterministic eval suites, all passing:** never-miss-escalation (8/8), never-miss-AKI (6/6),
+  never-over-refer (7/7), classification accuracy (10/10), risk accuracy (6/6), adversarial refusal
+  (10/10) — the safety-critical three treated as pass^k (must hold every run).
+- **KFRE validation: Harrell's C = 0.930** on the 35,539-patient cohort.
+- **Security:** 0 Semgrep findings, 0 secrets; `.env` and patient data never committed.
+
+*Reproduce with `pytest tests/unit/` and `bash security/ci/run_security_and_eval.sh`.*
 
 ## Honest by design
 
