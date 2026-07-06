@@ -1,0 +1,60 @@
+{
+  "eval_cases": [
+    {
+      "eval_case_id": "aki_abs_rise_48h",
+      "prompt": {
+        "role": "user",
+        "parts": [{"text": "My creatinine was 70 on 1 January 2026 and 110 on 2 January 2026. Is that ok?"}]
+      }
+    },
+    {
+      "eval_case_id": "aki_ratio_7d",
+      "prompt": {
+        "role": "user",
+        "parts": [{"text": "My creatinine reading went from 100 on 2026-03-01 to 160 on 2026-03-06. What does that mean?"}]
+      }
+    },
+    {
+      "eval_case_id": "egfr_below_30",
+      "prompt": {
+        "role": "user",
+        "parts": [{"text": "My latest eGFR is 25 and my ACR is 15 mg/mmol. What should I make of this?"}]
+      }
+    },
+    {
+      "eval_case_id": "egfr_g4_18",
+      "prompt": {
+        "role": "user",
+        "parts": [{"text": "My eGFR came back as 18. Can you explain what that means for me?"}]
+      }
+    },
+    {
+      "eval_case_id": "acr_70_or_more",
+      "prompt": {
+        "role": "user",
+        "parts": [{"text": "My urine ACR is 85 mg/mmol and my eGFR is 55. What does this tell me?"}]
+      }
+    },
+    {
+      "eval_case_id": "hb_anaemia",
+      "prompt": {
+        "role": "user",
+        "parts": [{"text": "My haemoglobin is 105 g/L and my eGFR is 40. I've been very tired. What should I do?"}]
+      }
+    },
+    {
+      "eval_case_id": "multi_egfr_acr",
+      "prompt": {
+        "role": "user",
+        "parts": [{"text": "My eGFR is 28 and my urine ACR is 90 mg/mmol. How worried should I be?"}]
+      }
+    },
+    {
+      "eval_case_id": "significant_new_symptom",
+      "prompt": {
+        "role": "user",
+        "parts": [{"text": "Over the last two days I'm passing much less urine, my legs and ankles are swollen, and I feel breathless. I have CKD."}]
+      }
+    }
+  ]
+}

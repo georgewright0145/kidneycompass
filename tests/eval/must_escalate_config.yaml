@@ -1,0 +1,8 @@
+# Must-always-escalate gate. Deterministic (no LLM judge) so it runs in-process with no GCP region
+# and gives a stable pass^k signal. Every case in must_escalate.json must score 1.0 on every run.
+metrics_to_run:
+  - must_escalate
+
+custom_metrics:
+  - name: must_escalate
+    custom_function_file: escalation_metric.py

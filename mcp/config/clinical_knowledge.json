@@ -1,0 +1,14 @@
+{
+  "name": "kidneycompass-clinical-knowledge",
+  "description": "Scoped MCP server serving versioned UK CKD guideline text (KDIGO 2024, NICE NG203/TAs, UKKA lifestyle, AKI thresholds, KFRE calibration) from spec/guidelines/. Exact-term + full-text retrieval so precise items (thresholds, ACR in mg/mmol, drug names, referral criteria) are looked up, not recalled from model memory.",
+  "scope": "this project only",
+  "transport": "stdio",
+  "command": "${PYTHON}",
+  "args": ["mcp/clinical_knowledge_server/server.py"],
+  "tools": [
+    {"name": "lookup_guideline", "description": "Look up guideline text by query; modes exact|fulltext|auto. Returns cited, versioned passages."},
+    {"name": "list_guideline_sources", "description": "List curated guideline sources and their versions."}
+  ],
+  "consumed_by": ["guidance_agent"],
+  "notes": "Consumed via ADK McpToolset over stdio (app/mcp_client.py). Vector retrieval is a documented future addition; current modes are exact-term and full-text. Least-privilege: only the two read-only lookup tools are exposed (tool_filter)."
+}

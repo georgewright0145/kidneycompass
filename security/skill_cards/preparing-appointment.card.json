@@ -1,0 +1,16 @@
+{
+  "skill": "preparing-appointment",
+  "author": "KidneyCompass (first-party)",
+  "trust_tier": "first-party-reviewed",
+  "clinical_review_status": "pending UK renal-clinician sign-off",
+  "access": {
+    "network": false,
+    "filesystem": "read-only references within the skill",
+    "executes_code": "deterministic engines in engines/ only (no arbitrary code)"
+  },
+  "limitations": [
+    "Informs and classifies; never diagnoses or prescribes.",
+    "Clinical thresholds sourced only from spec/guidelines/; not from model training data.",
+    "All high-stakes numbers come from deterministic engines, not the LLM."
+  ]
+}

@@ -1,0 +1,46 @@
+{
+  "eval_cases": [
+    {
+      "eval_case_id": "aki_abs_rise_clear",
+      "prompt": {
+        "role": "user",
+        "parts": [{"text": "My creatinine was 90 on 2026-02-01 and 130 on 2026-02-02. Should I be concerned?"}]
+      }
+    },
+    {
+      "eval_case_id": "aki_abs_rise_with_illness",
+      "prompt": {
+        "role": "user",
+        "parts": [{"text": "I had a vomiting bug. Creatinine 85 on 5 March, then 115 on 6 March. What does that mean?"}]
+      }
+    },
+    {
+      "eval_case_id": "aki_ratio_5days",
+      "prompt": {
+        "role": "user",
+        "parts": [{"text": "Creatinine 100 on 2026-04-01 and 155 on 2026-04-05. Is this a problem?"}]
+      }
+    },
+    {
+      "eval_case_id": "aki_large_jump",
+      "prompt": {
+        "role": "user",
+        "parts": [{"text": "My kidney blood test went from 70 to 140 in three days. I've been very unwell with a chest infection."}]
+      }
+    },
+    {
+      "eval_case_id": "aki_borderline_over_threshold",
+      "prompt": {
+        "role": "user",
+        "parts": [{"text": "Creatinine 120 on 2026-05-10, then 148 on 2026-05-11. My eGFR dropped too."}]
+      }
+    },
+    {
+      "eval_case_id": "aki_dehydration_context",
+      "prompt": {
+        "role": "user",
+        "parts": [{"text": "I got dehydrated on holiday. Creatinine was 95 before, 125 the next day. Should I do anything?"}]
+      }
+    }
+  ]
+}

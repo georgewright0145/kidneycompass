@@ -1,0 +1,49 @@
+name: KidneyCompass CI (security + eval gates)
+
+# Security and evaluation run inside the SDLC, not as a bolt-on (Day 4/5).
+# The deterministic clinical gates cannot be prompt-injected because they are code.
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  static-checks:
+    # Fast, no cloud creds: unit tests + SAST + secret scan.
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install uv
+        uses: astral-sh/setup-uv@v5
+      - name: Install project deps
+        run: uv tool install google-agents-cli@1.0.0 && agents-cli install
+      - name: Unit tests (deterministic engines + metrics)
+        run: .venv/bin/python -m pytest tests/unit/ -q
+      - name: Semgrep SAST
+        run: uvx semgrep --config auto --error engines/ app/ tests/ security/ mcp/
+      - name: Secret scan (project source)
+        run: |
+          LEAKS=$(uvx detect-secrets scan engines app tests security spec mcp \
+            | .venv/bin/python -c "import json,sys;print(sum(len(v) for v in json.load(sys.stdin).get('results',{}).values()))")
+          echo "findings: $LEAKS"; test "$LEAKS" = "0"
+
+  eval-gates:
+    # Clinical safety gates. Needs Vertex ADC (workload identity / service-account secret).
+    runs-on: ubuntu-latest
+    needs: static-checks
+    env:
+      GOOGLE_GENAI_USE_VERTEXAI: "true"
+      GOOGLE_CLOUD_PROJECT: kaggle-course-499808
+      GOOGLE_CLOUD_LOCATION: us-east1
+    steps:
+      - uses: actions/checkout@v4
+      - uses: astral-sh/setup-uv@v5
+      - uses: google-github-actions/auth@v2
+        with:
+          workload_identity_provider: ${{ secrets.GCP_WIF_PROVIDER }}
+          service_account: ${{ secrets.GCP_SERVICE_ACCOUNT }}
+      - name: Install
+        run: uv tool install google-agents-cli@1.0.0 && agents-cli install
+      - name: Clinical eval gates (pass^k)
+        run: bash security/ci/run_security_and_eval.sh
