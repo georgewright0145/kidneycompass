@@ -10,11 +10,13 @@ kfre_risk(age, sex, egfr, acr_mg_mmol, *, suspected_aki=False) -> KfreResult
 `risk_2yr` (float|None), `risk_5yr` (float|None), `inputs_echo` (dict), `caveats` (list[str]),
 `valid_whatifs` (list[str] = ["egfr","acr"]).
 
-## HARD GATE — current state
-- The UK recalibration constants are **not yet supplied**. Until a `UK_KFRE_CONSTANTS` block is
-  filled in (from user), `kfre_risk` MUST return `status="constants_unavailable"`, `risk_*=None`,
-  and a caveat explaining a clinician-verified UK-calibrated calculation is pending.
-- **Do NOT invent constants.** A wrong risk number is worse than an honest "unavailable."
+## Constants state
+- `UK_KFRE_CONSTANTS` is now **populated**: Tangri 4-var coefficients (from the ukidney.com
+  calculator JS) + UK baseline survival recalibrated on the Major 2019 cohort (see
+  `spec/kfre_recalibration/`). `kfre_risk` computes for valid G3a–5 inputs.
+- The refusal path is retained: if `UK_KFRE_CONSTANTS` is ever set back to `None`, `kfre_risk` MUST
+  return `status="constants_unavailable"` rather than invent a number.
+- **Never invent constants.** A wrong risk number is worse than an honest "unavailable."
 
 ## Refusal / applicability scenarios (must hold even once constants exist)
 - `suspected_aki=True` → `status="unstable_value"`, no number. (Never run on AKI-flagged values.)

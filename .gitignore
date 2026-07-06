@@ -211,3 +211,7 @@ credentials*.json
 # Generated eval traces, grade results, and security-scan output
 artifacts/
 .secrets.baseline
+
+# Real patient-level cohort data — never commit (synthetic-only policy)
+*plosmed*.csv
+kfre_*.csv

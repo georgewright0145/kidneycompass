@@ -5,10 +5,13 @@
 > the UKKA KFRE summary, and NICE (recommends the UK-calibrated version).
 > **Version: `kfre-4var-uk` / 2026-07-06.**
 >
-> ⚠️ **HARD DEPENDENCY — NOT YET SUPPLIED.** The exact UK **recalibration constants** (baseline
-> survival S₀ at 2 and 5 years, and the centering / coefficient values) are **not in the PRD** and
-> must be provided by the user before `kfre.py` computes any risk. Until then `kfre.py` MUST refuse
-> to compute and return `status: "constants_unavailable"`. **Do not invent constants.**
+> ✅ **CONSTANTS NOW LOADED (cohort-derived, pending clinician verification).** Coefficients &
+> centering: Tangri 4-variable KFRE, transcribed from the ukidney.com calculator JS. UK baseline
+> survival S₀ **re-estimated on the Major 2019 PLoS Medicine cohort** (Breslow recalibration):
+> **S₀(2yr) = 0.98791, S₀(5yr) = 0.95741** (ACR floor 0.6 mg/mmol). Validated: Harrell's C = 0.930;
+> UK S₀ higher than the non-UK Tangri values (0.975 / 0.9240), matching the finding that non-UK
+> calibrations overestimate UK risk. Full method + validation: `spec/kfre_recalibration/RESULTS.md`.
+> Still **pending UK renal-clinician verification** against the published Major 2019 S₀ figures.
 
 ## What KFRE predicts
 2- and 5-year risk of **kidney replacement therapy** (dialysis or transplant) for CKD stages
@@ -42,3 +45,6 @@ UK-recalibrated version** (the version NICE recommends; non-UK calibrations over
 
 ## Referral link
 A **5-year KFRE risk over 5%** is a NICE referral criterion (see `nice_ng203_management.md`).
+Per the UKKA KFRE summary (`spec/kfre_recalibration/UKKA_KFRE_summary.pdf`), this **>5% threshold has
+replaced the previous "eGFR < 30" referral trigger**, being more sensitive and specific for KRT.
+Both remain flagged by the escalation gate; the clinician makes the referral.
