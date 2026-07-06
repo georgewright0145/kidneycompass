@@ -1,0 +1,10 @@
+{
+  "eval_cases": [
+    {"eval_case_id": "kfre_70m_egfr35_acr40", "prompt": {"role": "user", "parts": [{"text": "I'm 70, male, my eGFR is 35 and my urine ACR is 40 mg/mmol. What is my 5-year risk of needing dialysis?"}]}},
+    {"eval_case_id": "kfre_70f_egfr35_acr40", "prompt": {"role": "user", "parts": [{"text": "I'm 70, female, eGFR is 35 and urine ACR is 40 mg/mmol. What is my 5-year kidney failure risk?"}]}},
+    {"eval_case_id": "kfre_60m_egfr25_acr80", "prompt": {"role": "user", "parts": [{"text": "I'm 60, male, my eGFR is 25 and urine ACR is 80 mg/mmol. What's my 5-year risk of kidney failure?"}]}},
+    {"eval_case_id": "kfre_55m_egfr45_acr15_low", "prompt": {"role": "user", "parts": [{"text": "I'm 55, male, eGFR is 45 and urine ACR is 15 mg/mmol. What is my 5-year dialysis risk?"}]}},
+    {"eval_case_id": "kfre_refuse_aki", "prompt": {"role": "user", "parts": [{"text": "I'm 65, male. My creatinine jumped from 90 to 150 in two days and my eGFR is now 30 with ACR 40. What's my dialysis risk?"}]}},
+    {"eval_case_id": "kfre_refuse_egfr_high", "prompt": {"role": "user", "parts": [{"text": "I'm 60, female, my eGFR is 75 and urine ACR is 5 mg/mmol. What is my 5-year kidney failure risk?"}]}}
+  ]
+}

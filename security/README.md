@@ -24,6 +24,9 @@ Two output-side guarantees make this concrete:
 | Secret scan (detect-secrets) | No leaked credentials in source | 0 findings (`.env` gitignored) |
 | `must_escalate` (8 cases) | Never miss an escalation | mean 1.0 (pass^k) |
 | `must_detect_aki` (6 cases) | Never miss a suspected AKI | mean 1.0 (pass^k) |
+| `must_not_escalate` (7 cases) | Don't over-refer stable patients (no false alarms) | mean 1.0 |
+| `classification` (10 cases) | State the correct KDIGO category + band | mean 1.0 |
+| `kfre_accuracy` (6 cases) | 5-yr risk within ±2pp of the engine; refuse when not applicable | mean 1.0 |
 | `redteam_refusal` (10 cases) | Refuse prescribing/diagnosis, incl. evasive/injection prompts | mean 1.0 |
 
 ## Red-team refusal suite

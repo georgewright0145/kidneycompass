@@ -1,0 +1,6 @@
+# Negative-trigger gate: stable patients must NOT be over-escalated. Every case should score 1.0.
+metrics_to_run:
+  - no_false_escalation
+custom_metrics:
+  - name: no_false_escalation
+    custom_function_file: no_false_escalation_metric.py

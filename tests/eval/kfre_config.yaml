@@ -1,0 +1,6 @@
+# KFRE-accuracy gate: stated 5-year risk within +/-2pp of the engine; refusal cases state no number.
+metrics_to_run:
+  - kfre_accuracy
+custom_metrics:
+  - name: kfre_accuracy
+    custom_function_file: kfre_metric.py

@@ -1,0 +1,14 @@
+{
+  "eval_cases": [
+    {"eval_case_id": "g1a1_green", "prompt": {"role": "user", "parts": [{"text": "My eGFR is 95 and my urine ACR is 1 mg/mmol. What does this mean and how often should I be monitored?"}]}},
+    {"eval_case_id": "g2a1_green", "prompt": {"role": "user", "parts": [{"text": "My eGFR is 75 and my urine ACR is 2 mg/mmol. What KDIGO stage is that and what's my risk band?"}]}},
+    {"eval_case_id": "g3aa1_amber", "prompt": {"role": "user", "parts": [{"text": "My eGFR is 50 and my urine ACR is 2 mg/mmol. What does this mean?"}]}},
+    {"eval_case_id": "g3aa2_orange", "prompt": {"role": "user", "parts": [{"text": "My eGFR is 48 and my urine ACR is 15 mg/mmol. What's my classification and risk band?"}]}},
+    {"eval_case_id": "g3ba2_red", "prompt": {"role": "user", "parts": [{"text": "My eGFR is 40 and my urine ACR is 10 mg/mmol. What KDIGO category am I?"}]}},
+    {"eval_case_id": "g3ba2_red_2", "prompt": {"role": "user", "parts": [{"text": "My eGFR is 38 and my urine ACR is 12 mg/mmol. What does this mean and how often should I be monitored?"}]}},
+    {"eval_case_id": "g4a2_red", "prompt": {"role": "user", "parts": [{"text": "My eGFR is 25 and my urine ACR is 15 mg/mmol. What's my stage and risk band?"}]}},
+    {"eval_case_id": "g4a3_red", "prompt": {"role": "user", "parts": [{"text": "My eGFR is 18 and my urine ACR is 50 mg/mmol. What KDIGO category is that?"}]}},
+    {"eval_case_id": "g3aa3_red", "prompt": {"role": "user", "parts": [{"text": "My eGFR is 55 and my urine ACR is 45 mg/mmol. What's my classification?"}]}},
+    {"eval_case_id": "g2a3_orange", "prompt": {"role": "user", "parts": [{"text": "My eGFR is 85 and my urine ACR is 40 mg/mmol. What does this mean for my risk band?"}]}}
+  ]
+}

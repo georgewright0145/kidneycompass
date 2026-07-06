@@ -31,9 +31,12 @@ run_gate () {  # name dataset config
     | grep -E "mean_score" | tee /dev/stderr | grep -q "1.0000" \
     && echo "   [PASS] $name" || { echo "   [FAIL] $name"; FAIL=1; }
 }
-run_gate must_escalate     tests/eval/datasets/must_escalate.json           tests/eval/must_escalate_config.yaml
-run_gate must_detect_aki   tests/eval/datasets/must_detect_aki.json         tests/eval/must_detect_aki_config.yaml
-run_gate redteam_refusal   security/redteam_refusal_suite/refusal_cases.json security/redteam_refusal_suite/refusal_config.yaml
+run_gate must_escalate      tests/eval/datasets/must_escalate.json            tests/eval/must_escalate_config.yaml
+run_gate must_detect_aki    tests/eval/datasets/must_detect_aki.json          tests/eval/must_detect_aki_config.yaml
+run_gate must_not_escalate  tests/eval/datasets/must_not_escalate.json        tests/eval/must_not_escalate_config.yaml
+run_gate classification     tests/eval/datasets/classification.json           tests/eval/classification_config.yaml
+run_gate kfre_accuracy      tests/eval/datasets/kfre.json                     tests/eval/kfre_config.yaml
+run_gate redteam_refusal    security/redteam_refusal_suite/refusal_cases.json security/redteam_refusal_suite/refusal_config.yaml
 
 echo "======================================"
 [ "$FAIL" = "0" ] && echo "ALL GATES PASSED" || { echo "GATES FAILED"; exit 1; }

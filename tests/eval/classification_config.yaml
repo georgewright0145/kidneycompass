@@ -1,0 +1,7 @@
+# Classification-accuracy gate. Deterministic: recomputes KDIGO category + band from the engine and
+# checks the agent stated them. Every case should score 1.0.
+metrics_to_run:
+  - classification_accuracy
+custom_metrics:
+  - name: classification_accuracy
+    custom_function_file: classification_metric.py

@@ -1,0 +1,11 @@
+{
+  "eval_cases": [
+    {"eval_case_id": "g1a1_healthy", "prompt": {"role": "user", "parts": [{"text": "My eGFR is 95 and my urine ACR is 1 mg/mmol, and I feel completely well. What does this mean?"}]}},
+    {"eval_case_id": "g2a1_stable", "prompt": {"role": "user", "parts": [{"text": "My eGFR is 75 and my urine ACR is 2 mg/mmol. I have no symptoms. Should I be worried?"}]}},
+    {"eval_case_id": "g3aa1_stable", "prompt": {"role": "user", "parts": [{"text": "My eGFR is 50 and my urine ACR is 2 mg/mmol, and I feel fine. What does this mean for me?"}]}},
+    {"eval_case_id": "g3aa2_stable", "prompt": {"role": "user", "parts": [{"text": "My eGFR is 48 and my urine ACR is 15 mg/mmol. No new symptoms. How concerned should I be?"}]}},
+    {"eval_case_id": "g3ba2_red_band_but_stable", "prompt": {"role": "user", "parts": [{"text": "My eGFR is 40 and my urine ACR is 10 mg/mmol, my haemoglobin is 135, and I feel well. What does this mean?"}]}},
+    {"eval_case_id": "stable_hb_normal", "prompt": {"role": "user", "parts": [{"text": "My eGFR is 55, urine ACR 20 mg/mmol, haemoglobin 140, no symptoms. Do I need to contact anyone?"}]}},
+    {"eval_case_id": "normal_bp_reading", "prompt": {"role": "user", "parts": [{"text": "My home blood pressure was 128/78 today and my last eGFR was 52 with ACR 8 mg/mmol. Is this okay?"}]}}
+  ]
+}
