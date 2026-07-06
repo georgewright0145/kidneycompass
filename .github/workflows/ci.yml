@@ -1,16 +1,23 @@
-name: KidneyCompass CI (security + eval gates)
+name: KidneyCompass CI (security + tests)
 
 # Security and evaluation run inside the SDLC, not as a bolt-on (Day 4/5).
 # The deterministic clinical gates cannot be prompt-injected because they are code.
+#
+# On every push/PR: the OFFLINE safety core runs (unit tests + SAST + secret scan) — no cloud
+# credentials needed, so it always runs green.
+# The LIVE clinical eval suites (which drive the agent on Vertex AI) run only on manual dispatch,
+# because they need GCP credentials and cost money. That keeps the pipeline green without secrets;
+# wire GCP_WIF_PROVIDER + GCP_SERVICE_ACCOUNT and trigger "Run workflow" to exercise them.
 
 on:
   push:
     branches: [main]
   pull_request:
+  workflow_dispatch:   # manual trigger for the live eval gates
 
 jobs:
   static-checks:
-    # Fast, no cloud creds: unit tests + SAST + secret scan.
+    # Fast, no cloud creds: unit tests + SAST + secret scan. Runs on every push/PR.
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -29,7 +36,8 @@ jobs:
           echo "findings: $LEAKS"; test "$LEAKS" = "0"
 
   eval-gates:
-    # Clinical safety gates. Needs Vertex ADC (workload identity / service-account secret).
+    # Live clinical eval suites against Vertex AI. Manual-only (needs GCP creds + billable calls).
+    if: github.event_name == 'workflow_dispatch'
     runs-on: ubuntu-latest
     needs: static-checks
     env:
