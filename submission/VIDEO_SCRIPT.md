@@ -10,32 +10,32 @@ Record the demo beats live in `agents-cli playground` first (they're all verifie
 **On screen:** Title "KidneyCompass — classify, don't diagnose." Then a stat card: *1 in 10 UK adults · ~44% undiagnosed · £7bn/year.*
 
 **Narration:**
-"More than one in ten UK adults has chronic kidney disease — and about 44% of them don't know it, because it's silent until it's late and expensive. People can now see their kidney blood tests in the NHS App, but as raw numbers with no meaning. A creatinine spike during a chest infection looks exactly like the disease getting worse. KidneyCompass closes that gap: it takes whatever results a person has, tells them what they mean, and speaks up the moment a clinician is needed — without ever pretending to be one."
+"More than one in ten UK adults has chronic kidney disease. Around 44% of them have no idea, because it stays silent until it's late — and expensive. You can now see your kidney results in the NHS App, but they're just numbers with nothing attached. Is an eGFR of 38 fine, or frightening? And a creatinine spike during a chest infection looks exactly like the disease getting worse. KidneyCompass fills that gap. It makes sense of whatever results you have, and it speaks up the moment you should call your GP — without ever pretending to be one."
 
-### 0:35–1:05 — Why an agent + the core idea
+### 0:35–1:15 — What you can bring + the core idea
 
-**On screen:** One line animates in: **"Classify, don't diagnose. Inform generically, route every decision to the clinician."**
-
-**Narration:**
-"Why an agent? Because interpreting scattered results, separating an acute event from a chronic trend, and turning that into the right question for a GP is exactly the multi-step reasoning agents are good at. But a clinical agent has one dangerous failure mode: reasoning that's wrong but looks right. So the central decision is this — the model never owns a clinical number. Classification, the AKI check, the risk equation, the escalation gate — all of it is deterministic Python. The model only understands messy input and explains the result in plain English."
-
-### 1:05–1:45 — Architecture (diagram)
-
-**On screen:** The architecture diagram — root orchestrator → four sub-agents; a box highlighting `engines/` (deterministic gates) and the two callbacks; the MCP server feeding the guidance agent.
+**On screen:** Input chips animate in around a phone — *blood & urine results · home BP & weight · symptoms · medicines · scans & letters* — then the line: **"Classify, don't diagnose. Inform generically, route every decision to the clinician."**
 
 **Narration:**
-"Here's the shape. A root orchestrator delegates to four specialist agents — classification, escalation, guidance, and appointment-prep — built with Google's ADK. Underneath sits a layer of deterministic engines: they're plain, unit-tested code, so they're auditable and can't be prompt-injected into a wrong answer. Two guarantees wrap the model: one callback refuses prescribing requests *before* the model runs; another guarantees any safety escalation reaches the user, even if the model gets distracted. A scoped MCP server serves the versioned NICE and KDIGO guideline text, so thresholds come from curated sources, never model memory."
+"Most people show up with a bit of a muddle — a blood test from the GP, a home blood-pressure monitor, a hospital letter they never quite understood, a bag of tablets. You can give KidneyCompass any of it. Your eGFR and urine ACR, your haemoglobin, your blood pressure, your symptoms, your medicines, even a photo of a scan letter. Nothing's required, there's no long form, and one value is enough to start — it just gets sharper the more you add. But here's the important bit: interpreting all that is exactly where a clinical agent could get it wrong but sound right. So the rule underneath everything is that the model never owns a clinical number. The classification, the AKI check, the risk equation, the escalation — that's all deterministic code. The model just understands what you typed, and explains the answer in plain English."
 
-### 1:45–3:35 — Demo (screen recording of the playground; this is the heart)
+### 1:15–1:50 — Architecture (diagram)
+
+**On screen:** The architecture diagram — inputs → root orchestrator → four sub-agents; a highlighted `engines/` (deterministic gates) and the two callbacks; the MCP server feeding the guidance agent.
+
+**Narration:**
+"Here's how it fits together. Whatever you bring flows into a root orchestrator, which hands off to four specialist agents — classification, escalation, guidance, and appointment-prep — built with Google's ADK. Underneath them sits a layer of deterministic engines. That's the safety core: plain, tested code, so it can't be talked into a wrong answer. Two guards wrap the model — one refuses prescribing before the model even runs, the other makes sure a safety warning always reaches you. And a small MCP server serves the actual NICE and KDIGO guideline text, so any threshold it quotes comes from a real source, not the model's memory."
+
+### 1:50–3:35 — Demo (screen recording of the playground; this is the heart)
 
 **Beat 1 — Classification (0:20).** Type: *"My eGFR is 38 and urine ACR is 12 mg/mmol — what does this mean and how often should I be monitored?"*
-> Narration: "It classifies against KDIGO — G3bA2, red band — and gives the NICE monitoring interval. Watch the trace: the category came from a deterministic tool call, not the model."
+> Narration: "Give it a couple of results and it classifies them against KDIGO — G3bA2, red band — and tells you how often NICE says to get checked. Keep an eye on the trace: that category came from a code tool call, not the model guessing."
 
 **Beat 2 — AKI caught + held out (0:30).** Type: *"My creatinine was 80 on Jan 1 and 130 on Jan 3. I had a chest infection that week."*
-> Narration: "Now the important one. A sudden creatinine rise — the app flags a suspected acute kidney injury, tells the person it's separated that reading from their long-term trend and risk estimate so it isn't misread as decline, and escalates urgently. This is the signature of an AKI, caught in the numbers."
+> Narration: "This is the one that matters most. A sudden jump in creatinine — it flags a suspected acute kidney injury, tells you it's set that reading aside so it doesn't drag down your trend, and says get seen promptly. That's an AKI, caught right there in the numbers, where it usually gets missed."
 
 **Beat 3 — The refusal (0:20).** Type: *"Should I stop taking my metformin?"*
-> Narration: "Try to make it prescribe, and it won't. It refuses the personal instruction and routes you to your GP — while still explaining, generically, that metformin is one clinicians review at this kidney function. That refusal is deterministic code, so it can't be talked around."
+> Narration: "Now try to make it prescribe. It won't. It hands the decision back to your GP — but it still tells you, generally, that metformin is one clinicians review at this level of kidney function. And that refusal is code, so you can't talk it around."
 
 **Beat 4 — Honest risk + what-if (0:25).** Type: *"I'm 70, male, eGFR 35, ACR 40 — what's my dialysis risk, and what if I lowered my ACR?"*
 > Narration: "It gives a five-year kidney-failure risk — about 7.4% — using a UK-calibrated equation, then recalculates honestly for a lower ACR. It only moves the number using real equation inputs; it won't fake it."
@@ -48,14 +48,14 @@ Record the demo beats live in `agents-cli playground` first (they're all verifie
 **On screen:** Quick montage — the six green eval suites; the KFRE validation line (C = 0.930); `agents-cli` commands; the CI security gate.
 
 **Narration:**
-"How was it built? Spec-driven and green-first, on Vertex AI with Gemini 2.5 Flash, using the Agents CLI to scaffold, evaluate, and run it. Every clinical threshold was written from source into a spec folder before any feature code. Safety is proven, not asserted: six deterministic evaluation suites run as gates — must-always-escalate, must-detect-AKI, must-not-over-refer, classification and risk accuracy, and a red-team refusal suite — all passing on every run, alongside a security scan. And the risk equation? The UK constants weren't published in plain form, so rather than invent them, I re-derived the UK calibration on a 35,000-patient cohort and validated it — a concordance of 0.93. A wrong risk number would be worse than none."
+"A quick word on how it's built, because it's the part I'm proudest of. It runs on Vertex AI with Gemini 2.5 Flash, scaffolded and evaluated with the Agents CLI. Every clinical threshold was written down from source before any feature code went in. And the safety isn't a claim — it's tested. Six evaluation suites run as gates: never miss an escalation, never miss an AKI, never over-refer someone who's stable, classify correctly, get the risk right, and refuse every attempt to make it prescribe. They all pass on every run. The risk equation is my favourite example: the UK constants weren't published in a form I could just drop in, so instead of inventing them, I re-derived the calibration on a cohort of 35,000 patients and checked it held up — a concordance of 0.93. An unverified number would have been worse than none."
 
 ### 4:25–5:00 — Close
 
 **On screen:** The one-liner again + "Educational support. It classifies and informs — it never prescribes."
 
 **Narration:**
-"KidneyCompass is deliberately educational self-management support — it classifies rather than diagnoses, and informs rather than prescribes, which is what keeps it both useful and defensible. It's an agent for good aimed at a disease the system chronically under-catches: giving patients interpretation, early recognition of the things that matter, and the confidence to act at the right moment. Thanks for watching."
+"So that's KidneyCompass. It's deliberately educational support — it classifies, it doesn't diagnose; it informs, it doesn't prescribe. That's the line that keeps it both genuinely useful and defensible. It takes a disease we catch far too late, and gives the one person who's there for all of it — the patient — a way to understand their numbers and act at the right moment. Thanks for watching."
 
 ---
 
