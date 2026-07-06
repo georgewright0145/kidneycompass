@@ -1,0 +1,186 @@
+<div class="cover" role="img" aria-label="KidneyCompass architecture cover: a root orchestrator on Gemini 2.5 Flash, wrapped by a do-not-answer guard and escalation-delivery guarantee, delegating to four specialist agents, over a layer of deterministic clinical engines and an MCP clinical-knowledge server.">
+  <div class="left">
+    <div class="brand">
+      <div class="mark" aria-hidden="true"><span></span><span></span><span></span></div>
+      <h1>KidneyCompass</h1>
+    </div>
+    <p class="sub">A chronic-kidney-disease companion for the UK&nbsp;/&nbsp;NHS</p>
+
+    <blockquote class="thesis">
+      Classify, don&rsquo;t diagnose.<br>Inform generically &mdash; <em>route every decision to the clinician.</em>
+    </blockquote>
+
+    <p class="value">
+      It reads whatever results a person has, classifies them against KDIGO&nbsp;2024, catches an
+      acute kidney injury hiding in the numbers, and speaks up the moment a clinician is needed.
+    </p>
+
+    <div class="heat" aria-label="KDIGO risk heat-map: green, amber, orange, red">
+      <span class="g"></span><span class="a"></span><span class="o"></span><span class="r"></span>
+      <em>KDIGO risk band</em>
+    </div>
+
+    <div class="tech">
+      <span>Vertex&nbsp;AI</span><span>Gemini&nbsp;2.5&nbsp;Flash</span><span>ADK</span><span>Agents&nbsp;CLI</span>
+    </div>
+  </div>
+
+  <div class="right">
+    <div class="flow">
+      <div class="entry">patient &middot; natural language</div>
+      <div class="conn"><span></span></div>
+
+      <div class="node orch">
+        <div class="node-h">Root Orchestrator <b>&middot; Gemini 2.5 Flash</b></div>
+        <div class="guards">
+          <div class="guard"><code>before_model</code> refuses prescribing &amp; diagnosis</div>
+          <div class="guard"><code>after_model</code> guarantees the escalation lands</div>
+        </div>
+      </div>
+
+      <div class="conn label"><span></span><em>delegates &middot; multi-agent ADK</em></div>
+
+      <div class="agents">
+        <div class="agent">Classification&nbsp;&amp;&nbsp;Risk</div>
+        <div class="agent safety">Escalation<small>safety core</small></div>
+        <div class="agent">Guidance</div>
+        <div class="agent">Appointment&nbsp;Prep</div>
+      </div>
+
+      <div class="conn"><span></span></div>
+
+      <div class="node engines">
+        <div class="node-h mono">deterministic clinical engines</div>
+        <div class="mono chips">
+          <span>classify</span><span>aki_check</span><span>kfre</span><span>escalation</span><span>guidance</span><span>appointment</span>
+        </div>
+        <div class="note">the gates run as code &mdash; auditable, not prompt-injectable</div>
+      </div>
+
+      <div class="conn"><span></span></div>
+
+      <div class="node mcp">
+        <div class="node-h">MCP clinical-knowledge server</div>
+        <div class="note">versioned NICE&nbsp;NG203 &amp; KDIGO text &mdash; retrieved, never recalled</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<style>
+  :root{
+    --ground:#0c2027; --ground-2:#0f2a33; --panel:#12333d; --panel-2:#0e2a32;
+    --ink:#ecf6f4; --ink-soft:#9bbdbd; --ink-dim:#6f9698;
+    --accent:#46c4b0; --accent-deep:#2b8f81;
+    --line:rgba(150,200,200,.22); --line-soft:rgba(150,200,200,.13);
+    --g:#57a773; --a:#e0a13c; --o:#e07a35; --r:#d24b3e;
+    --sans:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;
+    --mono:ui-monospace,"SF Mono",Menlo,"Cascadia Code",Consolas,monospace;
+  }
+  *{box-sizing:border-box}
+
+  .cover{
+    /* Fixed landscape cover — screenshot this box for the Kaggle gallery. */
+    width:1180px; max-width:100%; aspect-ratio:1180/690; margin:0 auto;
+    display:grid; grid-template-columns:0.86fr 1fr; gap:38px;
+    padding:46px 50px; color:var(--ink); font-family:var(--sans);
+    background:
+      radial-gradient(120% 90% at 8% 0%, #123742 0%, transparent 55%),
+      radial-gradient(130% 120% at 100% 100%, #0a2b2a 0%, transparent 50%),
+      var(--ground);
+    border:1px solid var(--line-soft);
+    box-shadow:0 30px 90px rgba(0,0,0,.45), inset 0 1px 0 rgba(255,255,255,.04);
+    overflow:hidden; position:relative;
+    animation:fade .5s ease both;
+  }
+  @keyframes fade{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+  @media (prefers-reduced-motion:reduce){.cover{animation:none}}
+
+  /* ---- LEFT: brand + thesis ---- */
+  .left{display:flex; flex-direction:column; min-width:0}
+  .brand{display:flex; align-items:center; gap:14px}
+  .mark{display:flex; gap:4px; align-items:flex-end; height:30px}
+  .mark span{width:6px; border-radius:3px; background:var(--accent)}
+  .mark span:nth-child(1){height:14px; opacity:.55}
+  .mark span:nth-child(2){height:28px}
+  .mark span:nth-child(3){height:20px; opacity:.78}
+  h1{font-size:40px; line-height:1; font-weight:800; letter-spacing:-.02em; margin:0; text-wrap:balance}
+  .sub{margin:14px 0 0; color:var(--ink-soft); font-size:15px; letter-spacing:.01em}
+
+  .thesis{
+    margin:26px 0 0; padding:16px 18px; font-size:20px; line-height:1.32; font-weight:650;
+    border-left:3px solid var(--accent); background:linear-gradient(90deg,rgba(70,196,176,.10),transparent);
+    border-radius:0 10px 10px 0; text-wrap:balance;
+  }
+  .thesis em{color:var(--accent); font-style:normal}
+
+  .value{margin:20px 0 0; color:var(--ink-soft); font-size:14.5px; line-height:1.55; max-width:46ch}
+
+  .heat{margin:auto 0 0; display:flex; align-items:center; gap:6px; padding-top:22px}
+  .heat span{width:34px; height:9px; border-radius:2px}
+  .heat .g{background:var(--g)} .heat .a{background:var(--a)}
+  .heat .o{background:var(--o)} .heat .r{background:var(--r)}
+  .heat em{margin-left:8px; font-style:normal; font-size:11px; letter-spacing:.14em; text-transform:uppercase; color:var(--ink-dim)}
+
+  .tech{display:flex; flex-wrap:wrap; gap:7px; margin-top:16px}
+  .tech span{
+    font-family:var(--mono); font-size:11px; color:var(--ink-soft);
+    padding:5px 9px; border:1px solid var(--line); border-radius:6px; background:rgba(255,255,255,.02);
+  }
+
+  /* ---- RIGHT: architecture flow ---- */
+  .right{display:flex; align-items:center; min-width:0}
+  .flow{display:flex; flex-direction:column; align-items:stretch; width:100%; gap:0}
+
+  .entry{
+    align-self:center; font-family:var(--mono); font-size:11.5px; letter-spacing:.04em;
+    color:var(--ink-dim); padding:5px 12px; border:1px dashed var(--line); border-radius:999px;
+  }
+
+  .conn{display:flex; flex-direction:column; align-items:center; justify-content:center; gap:6px; padding:9px 0}
+  .conn span{width:2px; height:16px; background:linear-gradient(var(--accent-deep),var(--line))}
+  .conn.label{flex-direction:row; gap:10px}
+  .conn.label em{font-style:normal; font-family:var(--mono); font-size:10.5px; letter-spacing:.1em; text-transform:uppercase; color:var(--ink-dim)}
+
+  .node{
+    border:1px solid var(--line); border-radius:12px; padding:13px 16px;
+    background:linear-gradient(180deg,var(--panel),var(--panel-2));
+    box-shadow:0 6px 20px rgba(0,0,0,.25);
+  }
+  .node-h{font-size:14.5px; font-weight:700; letter-spacing:-.005em}
+  .node-h b{color:var(--accent); font-weight:700}
+  .node-h.mono{font-family:var(--mono); font-size:12.5px; font-weight:600; text-transform:none; color:var(--ink)}
+
+  .orch{border-color:rgba(70,196,176,.4)}
+  .guards{display:flex; gap:10px; margin-top:10px}
+  .guard{
+    flex:1; font-size:11.5px; line-height:1.35; color:var(--ink-soft);
+    background:rgba(0,0,0,.22); border:1px solid var(--line-soft); border-radius:8px; padding:8px 10px;
+  }
+  .guard code{font-family:var(--mono); font-size:10.5px; color:var(--accent); display:block; margin-bottom:2px}
+
+  .agents{display:grid; grid-template-columns:repeat(4,1fr); gap:9px}
+  .agent{
+    font-size:12.5px; font-weight:640; line-height:1.2; text-align:center;
+    padding:12px 8px; border:1px solid var(--line); border-radius:10px;
+    background:rgba(255,255,255,.028); display:flex; flex-direction:column; gap:3px; justify-content:center; min-height:56px;
+  }
+  .agent small{font-family:var(--mono); font-size:9.5px; letter-spacing:.08em; text-transform:uppercase; color:var(--ink-dim); font-weight:500}
+  .agent.safety{border-color:rgba(210,75,62,.55); background:linear-gradient(180deg,rgba(210,75,62,.14),rgba(210,75,62,.03))}
+  .agent.safety small{color:var(--r)}
+
+  .engines{border-color:rgba(70,196,176,.32); background:linear-gradient(180deg,#123f43,#0e3034)}
+  .chips{display:flex; flex-wrap:wrap; gap:6px; margin-top:9px}
+  .chips span{
+    font-family:var(--mono); font-size:11px; color:var(--accent);
+    padding:3px 8px; border:1px solid rgba(70,196,176,.3); border-radius:6px; background:rgba(70,196,176,.07);
+  }
+  .note{margin-top:8px; font-size:11.5px; color:var(--ink-dim); line-height:1.4}
+  .mcp .node-h{color:var(--ink)}
+
+  /* keep it a clean fixed cover; shrink gracefully for narrow previews only */
+  @media (max-width:720px){
+    .cover{grid-template-columns:1fr; aspect-ratio:auto; padding:34px}
+    .agents{grid-template-columns:repeat(2,1fr)}
+  }
+</style>
